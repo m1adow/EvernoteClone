@@ -2,12 +2,13 @@
 using EvernoteClone.ViewModel.Commands;
 using EvernoteClone.ViewModel.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace EvernoteClone.ViewModel
 {
@@ -27,6 +28,19 @@ namespace EvernoteClone.ViewModel
                 _selectedNotebook = value;
                 OnPropertyChanged(nameof(SelectedNotebook));
                 GetNotes();
+            }
+        }
+
+        private FontFamily? _fontFamily;
+
+        public FontFamily? FontFamily
+        {
+            get { return _fontFamily; }
+            set
+            {
+                _fontFamily = value;
+                OnPropertyChanged(nameof(FontFamily));
+                FontFamilyChangeCommand?.Execute(null);
             }
         }
 
@@ -66,6 +80,23 @@ namespace EvernoteClone.ViewModel
             }
         }
 
+        private Visibility? _isVisible;
+
+        public Visibility? IsVisible
+        {
+            get { return _isVisible; }
+            set 
+            { 
+                _isVisible = value;
+                OnPropertyChanged(nameof(IsVisible));
+            }
+        }
+
+
+        public List<FontFamily>? FontsFamilies { get; set; }
+
+        public List<double> FontSizes { get; set; }
+
         public CreateNotebookCommand? CreateNotebookCommand { get; set; }
 
         public CreateNoteCommand? CreateNoteCommand { get; set; }
@@ -76,6 +107,11 @@ namespace EvernoteClone.ViewModel
 
         public StylingCommand? StylingCommand { get; set; }
 
+        public FontFamilyChangeCommand? FontFamilyChangeCommand { get; set; }
+        public StartEditingCommand? StartEditingCommand { get; set; }
+
+        public EndEditingCommand? EndEditingCommand { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public NotesViewModel()
@@ -85,9 +121,17 @@ namespace EvernoteClone.ViewModel
             ShutdownCommand = new ShutdownCommand(this);
             SpeechCommand = new SpeechCommand(this);
             StylingCommand = new StylingCommand(this);
+            FontFamilyChangeCommand = new FontFamilyChangeCommand(this);
+            StartEditingCommand = new StartEditingCommand(this);
+            EndEditingCommand = new EndEditingCommand(this);
 
             Notebooks = new ObservableCollection<Notebook>();
             Notes = new ObservableCollection<Note>();
+
+            IsVisible = Visibility.Collapsed;
+
+            FontsFamilies = Fonts.SystemFontFamilies.OrderBy(f => f.Source).ToList();
+            FontSizes = new List<double>() { 8, 9, 10, 11, 12, 14, 16, 18, 28, 48, 64, 72 };
 
             GetNotebooks();
         }
@@ -142,6 +186,18 @@ namespace EvernoteClone.ViewModel
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void StartEditing()
+        {
+            IsVisible = Visibility.Visible;
+        }
+
+        public void StopEditing(Notebook notebook)
+        {
+            IsVisible = Visibility.Collapsed;
+            DatabaseHelper.Update(notebook);
+            GetNotebooks();
         }
     }
 }

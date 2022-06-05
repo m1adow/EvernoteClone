@@ -12,6 +12,11 @@ namespace EvernoteClone.ViewModel.Commands
 
         public event EventHandler? CanExecuteChanged;
 
+        public StylingCommand(NotesViewModel? notesViewModel)
+        {
+            NotesViewModel = notesViewModel;
+        }
+
         public bool CanExecute(object? parameter)
         {
             return true;
@@ -43,11 +48,6 @@ namespace EvernoteClone.ViewModel.Commands
                 (richTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty) as TextDecorationCollection).TryRemove(TextDecorations.Underline, out textDecorations);
                 richTextBox.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, textDecorations);
             }
-        }
-
-        public StylingCommand(NotesViewModel? notesViewModel)
-        {
-            NotesViewModel = notesViewModel;
-        }
+        }      
     }
 }

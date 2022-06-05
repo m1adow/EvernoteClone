@@ -13,6 +13,11 @@ namespace EvernoteClone.ViewModel.Commands
 
         public event EventHandler? CanExecuteChanged;
 
+        public SpeechCommand(NotesViewModel? notesViewModel)
+        {
+            NotesViewModel = notesViewModel;
+        }
+
         public bool CanExecute(object? parameter)
         {
             return true;
@@ -38,11 +43,6 @@ namespace EvernoteClone.ViewModel.Commands
                     richTextBox.Document.Blocks.Add(new Paragraph(new Run(result.Text)));
                 }
             }
-        }
-
-        public SpeechCommand(NotesViewModel? notesViewModel)
-        {
-            NotesViewModel = notesViewModel;
-        }
+        }       
     }
 }
