@@ -31,6 +31,20 @@ namespace EvernoteClone.ViewModel
             }
         }
 
+        private Note? _selectedNote;
+
+        public Note? SelectedNote
+        {
+            get { return _selectedNote; }
+            set
+            {
+                _selectedNote = value;
+                OnPropertyChanged(nameof(SelectedNote));
+                SelectedNoteChanged?.Invoke(this, new EventArgs());
+            }
+        }
+
+
         private FontFamily? _fontFamily;
 
         public FontFamily? FontFamily
@@ -40,11 +54,22 @@ namespace EvernoteClone.ViewModel
             {
                 _fontFamily = value;
                 OnPropertyChanged(nameof(FontFamily));
-                FontFamilyChangeCommand?.Execute(null);
             }
         }
 
-        private bool _isBold;
+        private double _fontSize;
+
+        public double FontSize
+        {
+            get { return _fontSize; }
+            set
+            {
+                _fontSize = value;
+                OnPropertyChanged(nameof(FontSize));
+            }
+        }
+
+        private bool _isBold = false;
 
         public bool IsBold
         {
@@ -56,7 +81,7 @@ namespace EvernoteClone.ViewModel
             }
         }
 
-        private bool _isItalic;
+        private bool _isItalic = false;
 
         public bool IsItalic
         {
@@ -68,7 +93,7 @@ namespace EvernoteClone.ViewModel
             }
         }
 
-        private bool _isUnderline;
+        private bool _isUnderline = false;
 
         public bool IsUnderline
         {
@@ -101,29 +126,38 @@ namespace EvernoteClone.ViewModel
 
         public CreateNoteCommand? CreateNoteCommand { get; set; }
 
+        public SaveCommand? SaveCommand { get; set; }
+
         public ShutdownCommand? ShutdownCommand { get; set; }
 
         public SpeechCommand? SpeechCommand { get; set; }
 
-        public StylingCommand? StylingCommand { get; set; }
+        public SetStylingCommand? SetStylingCommand { get; set; }
 
         public FontFamilyChangeCommand? FontFamilyChangeCommand { get; set; }
+
         public StartEditingCommand? StartEditingCommand { get; set; }
 
         public EndEditingCommand? EndEditingCommand { get; set; }
 
+        public FontSizeChangeCommand? FontSizeChangeCommand { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public event EventHandler? SelectedNoteChanged;
 
         public NotesViewModel()
         {
             CreateNotebookCommand = new CreateNotebookCommand(this);
             CreateNoteCommand = new CreateNoteCommand(this);
+            SaveCommand = new SaveCommand(this);
             ShutdownCommand = new ShutdownCommand(this);
             SpeechCommand = new SpeechCommand(this);
-            StylingCommand = new StylingCommand(this);
+            SetStylingCommand = new SetStylingCommand(this);
             FontFamilyChangeCommand = new FontFamilyChangeCommand(this);
             StartEditingCommand = new StartEditingCommand(this);
             EndEditingCommand = new EndEditingCommand(this);
+            FontSizeChangeCommand = new FontSizeChangeCommand(this);
 
             Notebooks = new ObservableCollection<Notebook>();
             Notes = new ObservableCollection<Note>();
@@ -132,6 +166,9 @@ namespace EvernoteClone.ViewModel
 
             FontsFamilies = Fonts.SystemFontFamilies.OrderBy(f => f.Source).ToList();
             FontSizes = new List<double>() { 8, 9, 10, 11, 12, 14, 16, 18, 28, 48, 64, 72 };
+
+            _fontFamily = FontsFamilies[0];
+            _fontSize = FontSizes[5];
 
             GetNotebooks();
         }
@@ -175,7 +212,7 @@ namespace EvernoteClone.ViewModel
 
         private void GetNotes()
         {
-            var notes = DatabaseHelper.Read<Note>().Where(n => n.Id == SelectedNotebook?.Id).ToList();
+            var notes = DatabaseHelper.Read<Note>().Where(n => n.NotebookId == SelectedNotebook?.Id).ToList();
 
             Notes?.Clear();
 

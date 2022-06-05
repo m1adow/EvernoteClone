@@ -61,7 +61,8 @@
         </ListView>
         <ListView DockPanel.Dock="Left"
                   Width="140"
-                  ItemsSource="{Binding Notes}">
+                  ItemsSource="{Binding Notes}"
+                  SelectedValue="{Binding SelectedNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <usercontrol:NoteControl Note="{Binding}"/>
@@ -74,32 +75,48 @@
                         Command="{Binding SpeechCommand}"
                         CommandParameter="{Binding ElementName=contentRichTextBox}"/>
                 <ToggleButton IsChecked="{Binding IsBold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Command="{Binding StylingCommand}"
+                              Command="{Binding SetStylingCommand}"
                               CommandParameter="{Binding ElementName=contentRichTextBox}">
                     <TextBlock Text="B"
                                FontWeight="Bold"/>
                 </ToggleButton>
                 <ToggleButton IsChecked="{Binding IsItalic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Command="{Binding StylingCommand}"
+                              Command="{Binding SetStylingCommand}"
                               CommandParameter="{Binding ElementName=contentRichTextBox}">
                     <TextBlock Text="I"
                                FontStyle="Italic"/>
                 </ToggleButton>
                 <ToggleButton IsChecked="{Binding IsUnderline, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              Command="{Binding StylingCommand}"
+                              Command="{Binding SetStylingCommand}"
                               CommandParameter="{Binding ElementName=contentRichTextBox}">
                     <TextBlock Text="U"
                                TextDecorations="Underline"/>
                 </ToggleButton>
-                <ComboBox x:Name="fontFamilyComboBox"
-                          Width="100"
+                <ComboBox Width="100"
+                          Text="{Binding FontFamily}"                        
                           ItemsSource="{Binding FontsFamilies}"
-                          SelectedValue="{Binding FontFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <ComboBox x:Name="fontSizeComboBox"
-                          Width="50"
+                          SelectedValue="{Binding FontFamily, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FontFamilyChangeCommand}"
+                                                   CommandParameter="{Binding ElementName=contentRichTextBox}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>    
+                </ComboBox>
+                <ComboBox Width="50"
                           ItemsSource="{Binding FontSizes}"
                           IsEditable="True"
-                          Text=""/>
+                          Text="{Binding FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding FontSizeChangeCommand}"
+                                                   CommandParameter="{Binding ElementName=contentRichTextBox}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <Button Content="Save"
+                        Command="{Binding SaveCommand}"
+                        CommandParameter="{Binding ElementName=contentRichTextBox}"/>
             </ToolBar>
         </ToolBarTray>
         <Grid>

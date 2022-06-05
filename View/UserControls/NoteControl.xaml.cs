@@ -28,6 +28,7 @@ namespace EvernoteClone.View.UserControls
 
             noteControl.DataContext = noteControl.Note;
         }
+
         public NoteControl()
         {
             InitializeComponent();

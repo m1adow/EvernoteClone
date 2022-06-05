@@ -5,13 +5,13 @@ using System.Windows.Input;
 
 namespace EvernoteClone.ViewModel.Commands
 {
-    public class FontFamilyChangeCommand : ICommand
+    public class FontSizeChangeCommand : ICommand
     {
         public NotesViewModel? NotesViewModel { get; set; }
 
         public event EventHandler? CanExecuteChanged;
 
-        public FontFamilyChangeCommand(NotesViewModel? notesViewModel)
+        public FontSizeChangeCommand(NotesViewModel? notesViewModel)
         {
             NotesViewModel = notesViewModel;
         }
@@ -28,7 +28,7 @@ namespace EvernoteClone.ViewModel.Commands
             if (richTextBox is null)
                 return;
 
-            richTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, NotesViewModel?.FontFamily);
+            richTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, NotesViewModel?.FontSize);
         }
     }
 }

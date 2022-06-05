@@ -6,13 +6,13 @@ using System.Windows.Input;
 
 namespace EvernoteClone.ViewModel.Commands
 {
-    public class StylingCommand : ICommand
+    public class SetStylingCommand : ICommand
     {
         public NotesViewModel? NotesViewModel { get; set; }
 
         public event EventHandler? CanExecuteChanged;
 
-        public StylingCommand(NotesViewModel? notesViewModel)
+        public SetStylingCommand(NotesViewModel? notesViewModel)
         {
             NotesViewModel = notesViewModel;
         }
@@ -27,7 +27,7 @@ namespace EvernoteClone.ViewModel.Commands
             RichTextBox? richTextBox = parameter as RichTextBox;
 
             if (richTextBox is null || NotesViewModel is null)
-                return;
+                return;         
 
             if (NotesViewModel.IsBold)
                 richTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Bold);
