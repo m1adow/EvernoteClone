@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
 {
     public class SpeechCommand : ICommand
     {
@@ -43,6 +43,6 @@ namespace EvernoteClone.ViewModel.Commands
                     richTextBox.Document.Blocks.Add(new Paragraph(new Run(result.Text)));
                 }
             }
-        }       
+        }
     }
 }

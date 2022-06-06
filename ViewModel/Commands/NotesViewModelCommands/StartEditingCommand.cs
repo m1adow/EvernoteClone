@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
 {
     public class StartEditingCommand : ICommand
     {
@@ -22,6 +22,6 @@ namespace EvernoteClone.ViewModel.Commands
         public void Execute(object? parameter)
         {
             NotesViewModel?.StartEditing();
-        }      
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
 {
     public class FontFamilyChangeCommand : ICommand
     {
@@ -28,7 +28,7 @@ namespace EvernoteClone.ViewModel.Commands
             if (richTextBox is null)
                 return;
 
-            richTextBox.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, NotesViewModel?.FontFamily);
+            richTextBox.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, NotesViewModel?.FontFamily);
         }
     }
 }

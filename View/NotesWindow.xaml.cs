@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Documents;
 
 namespace EvernoteClone.View
@@ -12,5 +13,16 @@ namespace EvernoteClone.View
         {
             InitializeComponent();
         }
+
+        /*protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            if (string.IsNullOrEmpty(App.UserId))
+            {
+                LoginWindow loginWindow = new();
+                loginWindow.ShowDialog();
+            }
+        }*/
     }
 }

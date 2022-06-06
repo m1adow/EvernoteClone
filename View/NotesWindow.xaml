@@ -12,6 +12,11 @@
     <Window.Resources>
         <viewmodel:NotesViewModel x:Key="viewModel"/>
     </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Source={StaticResource viewModel}, Path=LoadedHandlerCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <DockPanel DataContext="{StaticResource viewModel}">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -25,11 +30,6 @@
                           Command="{Binding ShutdownCommand}"/>
             </MenuItem>
         </Menu>
-        <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock x:Name="statusTextBlock"/>
-            </StatusBarItem>
-        </StatusBar>
         <ListView DockPanel.Dock="Left"
                   Background="MidnightBlue"
                   Width="140"

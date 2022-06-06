@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
 {
     public class SetStylingCommand : ICommand
     {
@@ -27,17 +27,17 @@ namespace EvernoteClone.ViewModel.Commands
             RichTextBox? richTextBox = parameter as RichTextBox;
 
             if (richTextBox is null || NotesViewModel is null)
-                return;         
+                return;
 
             if (NotesViewModel.IsBold)
-                richTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Bold);
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Bold);
             else
-                richTextBox.Selection.ApplyPropertyValue(Inline.FontWeightProperty, FontWeights.Normal);
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeights.Normal);
 
             if (NotesViewModel.IsItalic)
-                richTextBox.Selection.ApplyPropertyValue(Inline.FontStyleProperty, FontStyles.Italic);
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Italic);
             else
-                richTextBox.Selection.ApplyPropertyValue(Inline.FontStyleProperty, FontStyles.Normal);
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontStyleProperty, FontStyles.Normal);
 
             if (NotesViewModel.IsUnderline)
                 richTextBox.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, TextDecorations.Underline);
@@ -48,6 +48,6 @@ namespace EvernoteClone.ViewModel.Commands
                 (richTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty) as TextDecorationCollection).TryRemove(TextDecorations.Underline, out textDecorations);
                 richTextBox.Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, textDecorations);
             }
-        }      
+        }
     }
 }

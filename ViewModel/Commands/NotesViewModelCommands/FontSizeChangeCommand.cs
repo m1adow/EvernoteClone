@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
 {
     public class FontSizeChangeCommand : ICommand
     {
@@ -28,7 +28,7 @@ namespace EvernoteClone.ViewModel.Commands
             if (richTextBox is null)
                 return;
 
-            richTextBox.Selection.ApplyPropertyValue(Inline.FontSizeProperty, NotesViewModel?.FontSize);
+            richTextBox.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, NotesViewModel?.FontSize);
         }
     }
 }

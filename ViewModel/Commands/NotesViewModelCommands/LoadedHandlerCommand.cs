@@ -1,16 +1,16 @@
-﻿using EvernoteClone.Model;
+﻿using EvernoteClone.View;
 using System;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
 {
-    public class EndEditingCommand : ICommand
+    public class LoadedHandlerCommand : ICommand
     {
         public NotesViewModel? NotesViewModel { get; set; }
 
         public event EventHandler? CanExecuteChanged;
 
-        public EndEditingCommand(NotesViewModel? notesViewModel)
+        public LoadedHandlerCommand(NotesViewModel? notesViewModel)
         {
             NotesViewModel = notesViewModel;
         }
@@ -22,12 +22,11 @@ namespace EvernoteClone.ViewModel.Commands
 
         public void Execute(object? parameter)
         {
-            Notebook? notebook = parameter as Notebook;
-
-            if (notebook is null)
-                return;
-
-            NotesViewModel?.StopEditing(notebook);
+            if (string.IsNullOrEmpty(App.UserId))
+            {
+                LoginWindow loginWindow = new();
+                loginWindow.ShowDialog();
+            }
         }
     }
 }

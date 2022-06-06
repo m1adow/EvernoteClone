@@ -1,5 +1,5 @@
 ﻿using EvernoteClone.Model;
-using EvernoteClone.ViewModel.Commands;
+using EvernoteClone.ViewModel.Commands.NotesViewModelCommands;
 using EvernoteClone.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace EvernoteClone.ViewModel
@@ -144,6 +143,8 @@ namespace EvernoteClone.ViewModel
 
         public SelectedNoteChangedCommand? SelectedNoteChangedCommand { get; set; }
 
+        public LoadedHandlerCommand? LoadedHandlerCommand { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public event EventHandler? SelectedNoteChanged;
@@ -161,6 +162,7 @@ namespace EvernoteClone.ViewModel
             EndEditingCommand = new EndEditingCommand(this);
             FontSizeChangeCommand = new FontSizeChangeCommand(this);
             SelectedNoteChangedCommand = new SelectedNoteChangedCommand(this);
+            LoadedHandlerCommand = new LoadedHandlerCommand(this);
 
             Notebooks = new ObservableCollection<Notebook>();
             Notes = new ObservableCollection<Note>();

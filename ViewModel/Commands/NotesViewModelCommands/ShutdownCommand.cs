@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
 {
-    public class CreateNotebookCommand : ICommand
+    public class ShutdownCommand : ICommand
     {
         public NotesViewModel? NotesViewModel { get; set; }
 
         public event EventHandler? CanExecuteChanged;
 
-        public CreateNotebookCommand(NotesViewModel? notesViewModel)
+        public ShutdownCommand(NotesViewModel? notesViewModel)
         {
             NotesViewModel = notesViewModel;
         }
@@ -21,7 +22,7 @@ namespace EvernoteClone.ViewModel.Commands
 
         public void Execute(object? parameter)
         {
-            NotesViewModel?.CreateNotebook();
+            Application.Current.Shutdown();
         }
     }
 }

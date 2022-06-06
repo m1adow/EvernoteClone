@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace EvernoteClone.ViewModel.Commands
+namespace EvernoteClone.ViewModel.Commands.LoginViewModelCommands
 {
-    public class LoginCommand : ICommand
+    public class ShowRegisterCommand : ICommand
     {
         public LoginViewModel? LoginViewModel { get; set; }
 
         public event EventHandler? CanExecuteChanged;
 
-        public LoginCommand(LoginViewModel? loginViewModel)
+        public ShowRegisterCommand(LoginViewModel? loginViewModel)
         {
             LoginViewModel = loginViewModel;
         }
@@ -21,7 +21,7 @@ namespace EvernoteClone.ViewModel.Commands
 
         public void Execute(object? parameter)
         {
-            //TODO: Login functionality
+            LoginViewModel?.SwitchViews();
         }
     }
 }
