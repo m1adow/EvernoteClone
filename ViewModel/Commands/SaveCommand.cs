@@ -19,31 +19,6 @@ namespace EvernoteClone.ViewModel.Commands
         public SaveCommand(NotesViewModel? notesViewModel)
         {
             NotesViewModel = notesViewModel;
-
-            NotesViewModel.SelectedNoteChanged += NotesViewModel_SelectedNoteChanged;
-        }
-
-        private void NotesViewModel_SelectedNoteChanged(object? sender, EventArgs e)
-        {
-            if (_richTextBox is null)
-                return;
-
-            _richTextBox.Document.Blocks.Clear();
-
-            if (NotesViewModel is null)
-                return;
-
-            if (NotesViewModel.SelectedNote is null)
-                return;
-
-            if (string.IsNullOrEmpty(NotesViewModel.SelectedNote.FileLocation))
-                return;
-           
-            using (var fileStream = new FileStream(NotesViewModel.SelectedNote.FileLocation, FileMode.Open))
-            {
-                var content = new TextRange(_richTextBox.Document.ContentStart, _richTextBox.Document.ContentEnd);
-                content.Load(fileStream, DataFormats.Rtf);
-            }
         }
 
         public bool CanExecute(object? parameter)

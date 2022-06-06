@@ -142,6 +142,8 @@ namespace EvernoteClone.ViewModel
 
         public FontSizeChangeCommand? FontSizeChangeCommand { get; set; }
 
+        public SelectedNoteChangedCommand? SelectedNoteChangedCommand { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public event EventHandler? SelectedNoteChanged;
@@ -158,6 +160,7 @@ namespace EvernoteClone.ViewModel
             StartEditingCommand = new StartEditingCommand(this);
             EndEditingCommand = new EndEditingCommand(this);
             FontSizeChangeCommand = new FontSizeChangeCommand(this);
+            SelectedNoteChangedCommand = new SelectedNoteChangedCommand(this);
 
             Notebooks = new ObservableCollection<Notebook>();
             Notes = new ObservableCollection<Note>();

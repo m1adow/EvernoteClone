@@ -63,6 +63,12 @@
                   Width="140"
                   ItemsSource="{Binding Notes}"
                   SelectedValue="{Binding SelectedNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedNoteChangedCommand}"
+                                           CommandParameter="{Binding ElementName=contentRichTextBox}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <usercontrol:NoteControl Note="{Binding}"/>
