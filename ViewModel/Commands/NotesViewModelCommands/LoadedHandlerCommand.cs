@@ -26,6 +26,8 @@ namespace EvernoteClone.ViewModel.Commands.NotesViewModelCommands
             {
                 LoginWindow loginWindow = new();
                 loginWindow.ShowDialog();
+
+                NotesViewModel.GetNotebooks();
             }
         }
     }
